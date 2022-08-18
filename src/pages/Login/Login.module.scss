@@ -1,0 +1,25 @@
+.wrapper {
+    --wrapper-radius: 24px;
+    height: 100%;
+    width: 100%;
+
+    position: relative;
+
+    .form-cover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .bg-cover {
+        border-top-right-radius: var(--wrapper-radius);
+        border-bottom-right-radius: var(--wrapper-radius);
+    }
+
+    .img {
+        position: absolute;
+        width: 40%;
+        bottom: 32px;
+        right: 10%;
+    }
+}
