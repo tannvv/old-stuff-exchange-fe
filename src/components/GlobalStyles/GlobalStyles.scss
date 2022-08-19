@@ -1,14 +1,15 @@
-
 :root {
-    --primary: #fe2c55;
+    --primary: #F47458;
     --black: #000;
     --text-color: #333;
     --white: #fff;
+    --bg-button-color: #F47458;
+    --bg-button-color-active: #f16c4e;
 
     --font-family: 'ProximaNova', sans-serif;
 
     // default layout
-    --default-layout-header-height: 60px;
+    --default-layout-header-height: 70px;
     --default-layout-width: 1150px;
     --default-layout-horizontal-spacer: 24px;
 }
