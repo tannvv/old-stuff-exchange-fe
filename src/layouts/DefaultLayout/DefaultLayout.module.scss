@@ -2,12 +2,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: var(--default-layout-header-height);
 }
 
-.container {
-    width: var(--default-layout-width);
+.inner {
     padding: 0 var(--default-layout-horizontal-spacer);
     display: flex;
+}
+
+.sidebar {
+    width: 300px;
 }
 
 .content {

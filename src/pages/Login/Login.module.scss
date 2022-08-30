@@ -1,6 +1,6 @@
 .wrapper {
     --wrapper-radius: 24px;
-    height: 100%;
+    height: calc(96vh - var(--default-layout-header-height));
     width: 100%;
 
     position: relative;

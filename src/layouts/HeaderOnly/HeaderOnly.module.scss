@@ -1,0 +1,11 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: var(--default-layout-header-height);
+    background-color: #46435f;
+}
+
+.content {
+    min-height: calc(100vh - var(--default-layout-header-height));
+}

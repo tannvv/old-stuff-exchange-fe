@@ -1,6 +1,6 @@
 // import { Wrapper as PopperWrapper } from '~/components/Popper';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { useEffect, useState, useRef, LegacyRef, MutableRefObject } from 'react';
+import { useEffect, useState, useRef, LegacyRef, MutableRefObject, memo } from 'react';
 import { MdClear } from 'react-icons/md';
 import { FaSpinner } from 'react-icons/fa';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -93,4 +93,4 @@ function Search() {
     );
 }
 
-export default Search;
+export default memo(Search);

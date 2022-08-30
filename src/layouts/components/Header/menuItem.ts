@@ -1,17 +1,10 @@
-import { IconType } from 'react-icons';
 import { CgProfile } from 'react-icons/cg';
 import { GrLanguage } from 'react-icons/gr';
+import { VscSignIn } from 'react-icons/vsc';
+import { IoCreateOutline } from 'react-icons/io5';
+import IMenuItem from '~/interfaces/IMenuItem';
 
-export interface MenuItem {
-    icon?: IconType;
-    title: string;
-    code?: string;
-    to?: string;
-    children?: object;
-    data?: any[];
-}
-
-export const MENU_ITEMS: MenuItem[] = [
+export const MENU_ITEMS: IMenuItem[] = [
     {
         icon: GrLanguage,
         title: 'Language',
@@ -50,5 +43,18 @@ export const MENU_ITEMS: MenuItem[] = [
         icon: CgProfile,
         title: 'Profile',
         to: '/profile',
+    },
+];
+
+export const MENU_ITEMS_ANONYMOUS: IMenuItem[] = [
+    {
+        icon: VscSignIn,
+        title: 'Sign in',
+        to: '/login',
+    },
+    {
+        icon: IoCreateOutline,
+        title: 'Sign up',
+        to: '/signUp',
     },
 ];

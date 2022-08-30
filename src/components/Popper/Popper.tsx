@@ -1,9 +1,10 @@
 import classNames from 'classnames/bind';
+import { ReactElement } from 'react';
 import styles from './Popper.module.scss';
 
 interface Props {
     className?: string;
-    children: JSX.Element;
+    children: ReactElement;
 }
 const cx = classNames.bind(styles);
 function Popper({ children, className }: Props) {

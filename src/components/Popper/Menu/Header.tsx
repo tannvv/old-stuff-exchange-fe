@@ -1,5 +1,6 @@
-import ClassNames from 'classnames/bind';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
+import React from 'react';
+import classNames from 'classnames/bind';
+import { IoIosArrowBack } from 'react-icons/io';
 
 import styles from './Menu.module.scss';
 
@@ -7,16 +8,16 @@ interface Props {
     title: string;
     onBack: () => void;
 }
-const cx = ClassNames.bind(styles);
-function Header({ title, onBack }: Props) {
+const cx = classNames.bind(styles);
+const Header = ({ title, onBack }: Props) => {
     return (
         <header className={cx('header')}>
             <button className={cx('back-btn')} onClick={onBack}>
-                <AiOutlineArrowLeft />
+                <IoIosArrowBack />
             </button>
             <h4 className={cx('header-title')}>{title}</h4>
         </header>
     );
-}
+};
 
 export default Header;

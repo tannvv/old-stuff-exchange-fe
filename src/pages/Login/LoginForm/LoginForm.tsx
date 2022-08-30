@@ -1,17 +1,35 @@
 import classNames from 'classnames/bind';
 import { CgArrowsExchange } from 'react-icons/cg';
+import { Link } from 'react-router-dom';
 
 import styles from './LoginForm.module.scss';
 import images from '~/assets/images';
+import config from '~/config';
+import { UserAuth } from '~/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 const LoginForm = () => {
+    const { googleSignIn, user } = UserAuth();
+    const navigate = useNavigate();
+
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        if (user) {
+            navigate(config.routes.profile);
+        }
+    }, [user, navigate]);
+
     return (
         <div className={cx('wrapper', 'lg:w-2/3 lg:h-5/6')}>
-            <div className={cx('header')}>
-                <img src={images.logo} alt="logo" className={cx('logo')} />
-                <p className={cx('name')}>OLD STUFF EXCHANGE</p>
-            </div>
             <div className="content">
                 <p className={cx('welcome')}>Welcome back!!!</p>
                 <p className={cx('sign-in')}>Sign in</p>
@@ -38,13 +56,15 @@ const LoginForm = () => {
                 </form>
                 <div className={cx('cover-sign-up')}>
                     <span className={cx('account-title')}>I don't have an account ?</span>
-                    <span className={cx('sign-up')}>Sign up</span>
+                    <span className={cx('sign-up')}>
+                        <Link to={config.routes.signUp}>Sign up</Link>
+                    </span>
                 </div>
                 <div className={cx('social-network')}>
                     <p className={cx('or')}>or</p>
                     <p className={cx('connect')}>connect with</p>
                     <div className={cx('btn-social')}>
-                        <button className={cx('gmail')}>
+                        <button className={cx('gmail')} onClick={handleGoogleSignIn}>
                             <img src={images.gmail} alt="gmail" className={cx('img-btn')} />
                             Gmail
                         </button>

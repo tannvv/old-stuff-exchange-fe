@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react';
 import classNames from 'classnames/bind';
-import { IconType } from 'react-icons';
 
 import styles from './Button.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, Location } from 'react-router-dom';
+import React, { ReactNode } from 'react';
+import { IconType } from 'react-icons';
 
 interface Props {
     to?: string;
@@ -13,10 +13,11 @@ interface Props {
     disabled?: boolean;
     small?: boolean;
     large?: boolean;
+    location?: Location;
     children: ReactNode;
     className?: string;
-    leftIcon?: ReactNode;
-    rightIcon?: ReactNode;
+    leftIcon?: IconType;
+    rightIcon?: IconType;
     onClick?: () => void;
     passProps?: any;
 }
@@ -29,6 +30,7 @@ const Button = ({
     disabled = false,
     small = false,
     large = false,
+    location,
     children,
     className,
     leftIcon,
@@ -53,20 +55,23 @@ const Button = ({
         _props.to = to;
         Comp = Link;
     }
+    const active = location && location?.pathname === to ? true : false;
     const classes = cx('wrapper', {
+        [className as string]: className,
         primary,
         rounded,
         outline,
         disabled,
         small,
         large,
+        active,
     });
 
     return (
         <Comp className={classes} {..._props}>
-            {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
+            {leftIcon && <span className={cx('icon')}>{React.createElement(leftIcon)}</span>}
             <span className={cx('title')}>{children}</span>
-            {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
+            {rightIcon && <span className={cx('icon')}>{React.createElement(rightIcon)}</span>}
         </Comp>
     );
 };

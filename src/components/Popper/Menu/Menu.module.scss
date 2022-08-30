@@ -10,6 +10,7 @@
 .menu-item {
     width: 100%;
     border-radius: 0;
+    display: flex;
     justify-content: flex-start;
     font-weight: 600;
     padding: 11px 16px;
@@ -38,8 +39,8 @@
     position: relative;
     height: 50px;
     margin-top: -8px;
-    cursor: pointer;
     flex-shrink: 0;
+    cursor: text;
 
     &:hover {
         background-color: rgba(22, 24, 35, 0.03);
@@ -47,6 +48,9 @@
 }
 
 .back-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
     width: 50px;
     background-color: transparent;
@@ -59,4 +63,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
+
+
 }
