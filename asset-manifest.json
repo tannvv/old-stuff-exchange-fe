@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.f5c7c4bc.css",
-    "main.js": "/static/js/main.ac096e75.js",
-    "static/media/bg-sign-up.svg": "/static/media/bg-sign-up.f2134cf90764615e6aba20d5f178a3b6.svg",
-    "static/media/sofiapro-semibold.otf": "/static/media/sofiapro-semibold.a9a8148f7d5d0db20db8.otf",
-    "static/media/bg-not-found.svg": "/static/media/bg-not-found.1ca2e103c2a4d6956047d42480faa1a0.svg",
-    "static/media/sofiapro-bold.woff2": "/static/media/sofiapro-bold.1d7186488612ac20891f.woff2",
-    "static/media/Proxima-Nova-Bold.woff2": "/static/media/Proxima-Nova-Bold.8dd475cbc90552d85f91.woff2",
-    "static/media/Proxima-Nova-Regular.woff2": "/static/media/Proxima-Nova-Regular.6c83037ae28747e6d774.woff2",
-    "static/media/Proxima-Nova-Semibold.woff2": "/static/media/Proxima-Nova-Semibold.c5632e80f6e35c93156f.woff2",
-    "static/media/bg-login.svg": "/static/media/bg-login.0acf2e7eee53e017b6992e68b3f42f51.svg",
-    "static/media/loading.svg": "/static/media/loading.c6cd00ef298033f1495cd8c06534a679.svg",
-    "static/media/gmail.svg": "/static/media/gmail.eb77a78fbed8d9a46031cd730b1d104d.svg",
-    "static/media/facebook.svg": "/static/media/facebook.30cf95edb4a0de5fe85f95c7155b56de.svg",
-    "index.html": "/index.html",
-    "main.f5c7c4bc.css.map": "/static/css/main.f5c7c4bc.css.map",
-    "main.ac096e75.js.map": "/static/js/main.ac096e75.js.map"
+    "main.css": "./static/css/main.b264b340.css",
+    "main.js": "./static/js/main.534c3722.js",
+    "static/media/bg-sign-up.svg": "./static/media/bg-sign-up.f2134cf90764615e6aba20d5f178a3b6.svg",
+    "static/media/sofiapro-semibold.otf": "./static/media/sofiapro-semibold.a9a8148f7d5d0db20db8.otf",
+    "static/media/bg-not-found.svg": "./static/media/bg-not-found.1ca2e103c2a4d6956047d42480faa1a0.svg",
+    "static/media/sofiapro-bold.woff2": "./static/media/sofiapro-bold.1d7186488612ac20891f.woff2",
+    "static/media/Proxima-Nova-Bold.woff2": "./static/media/Proxima-Nova-Bold.8dd475cbc90552d85f91.woff2",
+    "static/media/Proxima-Nova-Regular.woff2": "./static/media/Proxima-Nova-Regular.6c83037ae28747e6d774.woff2",
+    "static/media/Proxima-Nova-Semibold.woff2": "./static/media/Proxima-Nova-Semibold.c5632e80f6e35c93156f.woff2",
+    "static/media/bg-login.svg": "./static/media/bg-login.0acf2e7eee53e017b6992e68b3f42f51.svg",
+    "static/media/loading.svg": "./static/media/loading.c6cd00ef298033f1495cd8c06534a679.svg",
+    "static/media/gmail.svg": "./static/media/gmail.eb77a78fbed8d9a46031cd730b1d104d.svg",
+    "index.html": "./index.html",
+    "static/media/facebook.svg": "./static/media/facebook.30cf95edb4a0de5fe85f95c7155b56de.svg",
+    "main.b264b340.css.map": "./static/css/main.b264b340.css.map",
+    "main.534c3722.js.map": "./static/js/main.534c3722.js.map"
   },
   "entrypoints": [
-    "static/css/main.f5c7c4bc.css",
-    "static/js/main.ac096e75.js"
+    "static/css/main.b264b340.css",
+    "static/js/main.534c3722.js"
   ]
 }
