@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/old-stuff-exchange-fe/static/css/main.d63bff0d.css",
+    "main.js": "/old-stuff-exchange-fe/static/js/main.dcd7f494.js",
+    "static/media/bg-sign-up.svg": "/old-stuff-exchange-fe/static/media/bg-sign-up.f2134cf90764615e6aba20d5f178a3b6.svg",
+    "static/media/sofiapro-semibold.otf": "/old-stuff-exchange-fe/static/media/sofiapro-semibold.a9a8148f7d5d0db20db8.otf",
+    "static/media/bg-not-found.svg": "/old-stuff-exchange-fe/static/media/bg-not-found.1ca2e103c2a4d6956047d42480faa1a0.svg",
+    "static/media/sofiapro-bold.woff2": "/old-stuff-exchange-fe/static/media/sofiapro-bold.1d7186488612ac20891f.woff2",
+    "static/media/Proxima-Nova-Bold.woff2": "/old-stuff-exchange-fe/static/media/Proxima-Nova-Bold.8dd475cbc90552d85f91.woff2",
+    "static/media/Proxima-Nova-Regular.woff2": "/old-stuff-exchange-fe/static/media/Proxima-Nova-Regular.6c83037ae28747e6d774.woff2",
+    "static/media/Proxima-Nova-Semibold.woff2": "/old-stuff-exchange-fe/static/media/Proxima-Nova-Semibold.c5632e80f6e35c93156f.woff2",
+    "static/media/bg-login.svg": "/old-stuff-exchange-fe/static/media/bg-login.0acf2e7eee53e017b6992e68b3f42f51.svg",
+    "static/media/loading.svg": "/old-stuff-exchange-fe/static/media/loading.c6cd00ef298033f1495cd8c06534a679.svg",
+    "static/media/gmail.svg": "/old-stuff-exchange-fe/static/media/gmail.eb77a78fbed8d9a46031cd730b1d104d.svg",
+    "index.html": "/old-stuff-exchange-fe/index.html",
+    "static/media/facebook.svg": "/old-stuff-exchange-fe/static/media/facebook.30cf95edb4a0de5fe85f95c7155b56de.svg",
+    "main.d63bff0d.css.map": "/old-stuff-exchange-fe/static/css/main.d63bff0d.css.map",
+    "main.dcd7f494.js.map": "/old-stuff-exchange-fe/static/js/main.dcd7f494.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d63bff0d.css",
+    "static/js/main.dcd7f494.js"
+  ]
+}
