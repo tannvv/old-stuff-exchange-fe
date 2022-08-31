@@ -33,35 +33,52 @@ const SignUpForm = (): JSX.Element => {
                     <div className={cx('separate-form', 'lg:flex lg:justify-between')}>
                         <div className={cx('inner-form', 'lg:w-[46%]')}>
                             <div className={cx('form-control')}>
-                                <p className={cx('label')}>User name</p>
-                                <input type="text" name="email" className={cx('input')} />
+                                <label htmlFor="username-input" className={cx('label')}>
+                                    User name
+                                </label>
+                                <input id="username-input" type="text" name="email" className={cx('input')} />
                             </div>
                             <div className={cx('form-control')}>
-                                <p className={cx('label')}>Apartment</p>
-                                <input type="text" name="email" className={cx('input')} />
+                                <label htmlFor="apartment-input" className={cx('label')}>
+                                    Apartment
+                                </label>
+                                <input id="apartment-input" type="text" name="apartment" className={cx('input')} />
                             </div>
                             <div className={cx('form-control')}>
-                                <p className={cx('label')}>Building</p>
-                                <input type="text" name="email" className={cx('input')} />
+                                <label htmlFor="building-input" className={cx('label')}>
+                                    Building
+                                </label>
+                                <input id="building-input" type="text" name="building" className={cx('input')} />
                             </div>
                         </div>
                         <div className={cx('inner-form', 'lg:w-[46%]')}>
                             <div className={cx('form-control')}>
-                                <p className={cx('label')}>Phone</p>
-                                <input type="text" name="email" className={cx('input')} />
+                                <label htmlFor="phone-input" className={cx('label')}>
+                                    Phone
+                                </label>
+                                <input id="phone-input" type="text" name="email" className={cx('input')} />
                             </div>
 
                             <div className={cx('form-control')}>
                                 <div className={cx('password')}>
-                                    <p className={cx('label')}>Password</p>
+                                    <label htmlFor="password-input" className={cx('label')}>
+                                        Password
+                                    </label>
                                 </div>
-                                <input type="password" name="password" className={cx('input')} />
+                                <input id="password-input" type="password" name="password" className={cx('input')} />
                             </div>
                             <div className={cx('form-control')}>
                                 <div className={cx('password')}>
-                                    <p className={cx('label')}>Re-password</p>
+                                    <label htmlFor="re-password-input" className={cx('label')}>
+                                        Re-password
+                                    </label>
                                 </div>
-                                <input type="password" name="rePassword" className={cx('input')} />
+                                <input
+                                    id="re-password-input"
+                                    type="password"
+                                    name="rePassword"
+                                    className={cx('input')}
+                                />
                             </div>
                         </div>
                     </div>

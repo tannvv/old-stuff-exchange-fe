@@ -8,4 +8,5 @@ export default interface IMenuItem {
     data?: IMenuItem[];
     children?: IMenuItem;
     separate?: boolean;
+    onClick?: () => void;
 }

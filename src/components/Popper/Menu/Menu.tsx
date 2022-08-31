@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
 import TippyHeadLess from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
+import { useState } from 'react';
 
-import styles from './Menu.module.scss';
 import IMenuItem from '~/interfaces/IMenuItem';
-import MenuItem from './MenuItem';
 import Popper from '../Popper';
 import Header from './Header';
+import styles from './Menu.module.scss';
+import MenuItem from './MenuItem';
 
 interface Props {
     items?: IMenuItem[];
@@ -56,6 +56,7 @@ const Menu = ({ items, children, hideOnClick = false, onChange = defaultFn }: Pr
         </div>
     );
     const handleResetToFirstPage = () => setHistory((prev) => prev.slice(0, 1));
+
     return (
         <TippyHeadLess
             interactive={true}

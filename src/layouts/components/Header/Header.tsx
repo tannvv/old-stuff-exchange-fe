@@ -13,49 +13,50 @@ import images from '~/assets/images';
 import Image from '~/components/Image';
 import Search from '../Search';
 
-import { MENU_ITEMS as menuItems, MENU_ITEMS_ANONYMOUS } from './menuItem';
+import { MENU_ITEMS, MENU_ITEMS_ANONYMOUS } from './menuItem';
 import { Button } from '~/components/Button';
-import TippyHeadless from '@tippyjs/react/headless';
 import Menu from '~/components/Popper/Menu';
 import IMenuItem from '~/interfaces/IMenuItem';
+import { useAuth } from '~/context/AuthContext';
 
 const cx = classNames.bind(styles);
-const MENU_ITEMS = menuItems;
 
-function Header() {
-    const currentUser = false;
+function Header(): JSX.Element {
     const inboxNumber = 2;
     const location = useLocation();
+    const { logOut, user } = useAuth()!;
 
     const handleMenuChange = (item?: IMenuItem) => {
+        if (item?.onClick) {
+            item.onClick();
+        }
         console.log(item);
     };
 
-    const userMenu = [
+    const userMenu: IMenuItem[] = [
         {
-            icon: <AiOutlineUser />,
+            icon: AiOutlineUser,
             title: 'View profile',
             to: '/@tannv',
         },
         {
-            icon: <RiCoinLine />,
+            icon: RiCoinLine,
             title: 'Get coins',
             to: '/coin',
         },
         {
-            icon: <BsGear />,
+            icon: BsGear,
             title: 'Settings',
             to: '/settings',
         },
         ...MENU_ITEMS,
         {
-            icon: <AiOutlineLogout />,
+            icon: AiOutlineLogout,
             title: 'Log out',
-            to: '/signOut',
+            onClick: logOut,
             separate: true,
         },
     ];
-
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner', 'container')}>
@@ -67,10 +68,10 @@ function Header() {
                     <Search />
                 </div>
                 <div className={cx('actions', 'ml-[0]')}>
-                    {currentUser ? (
+                    {user ? (
                         <>
                             <Tippy content="Upload video" delay={100}>
-                                <button className={cx('action-btn')}>
+                                <button className={cx('action-btn')} aria-label="action-btn">
                                     <AiOutlineUpload />
                                 </button>
                             </Tippy>
@@ -93,19 +94,17 @@ function Header() {
                             </div>
                         </>
                     )}
-                    <Menu items={currentUser ? MENU_ITEMS : MENU_ITEMS_ANONYMOUS} onChange={handleMenuChange}>
-                        {currentUser ? (
-                            <Image
-                                src="https://lh3.googleusercontent.com/ogw/AOh-ky1YV1CzT3Rk3mL5Qu_YvE9jUi7vtQNtNVy99ja_=s32-c-mo"
-                                alt="TanNV"
-                                className={cx('user-avatar')}
-                            />
-                        ) : (
-                            <button className={cx('more-btn', 'lg:hidden')}>
+                    {user ? (
+                        <Menu items={userMenu} onChange={handleMenuChange} key={'user-menu'}>
+                            <Image src={user.imageUrl} alt={user.fullName} className={cx('user-avatar')} />
+                        </Menu>
+                    ) : (
+                        <Menu items={MENU_ITEMS_ANONYMOUS} onChange={handleMenuChange} key={'anonymous-menu'}>
+                            <button className={cx('more-btn', 'lg:hidden')} aria-label="more-btn">
                                 <IoEllipsisVerticalSharp />
                             </button>
-                        )}
-                    </Menu>
+                        </Menu>
+                    )}
                 </div>
             </div>
         </header>

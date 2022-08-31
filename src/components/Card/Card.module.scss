@@ -1,0 +1,59 @@
+.wrapper {
+    cursor: pointer;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0.2px 0.2px 6px #ccc;
+    transition: transform 0.1s linear;
+    border: 2px solid white;
+
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0.2px 2px 10px #ccc;
+        border-color: rgb(226, 223, 223);
+    }
+}
+
+.content {
+    padding: 12px;
+}
+
+.name {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 25px;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    font-size: 1.4rem;
+}
+
+.origin-price {
+    margin-top: 12px;
+    font-size: 1.4rem;
+    color: rgb(156, 156, 156);
+
+    span {
+        margin-left: 8px;
+        color: #f76953;
+        text-decoration-line: line-through;
+    }
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.price {
+    font-size: 1.8rem;
+    color: #F84B2F;
+}
+
+.poster {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: rgb(156, 156, 156);
+}

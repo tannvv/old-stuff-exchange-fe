@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 const Header = ({ title, onBack }: Props) => {
     return (
         <header className={cx('header')}>
-            <button className={cx('back-btn')} onClick={onBack}>
+            <button className={cx('back-btn')} onClick={onBack} aria-label="arrow-back">
                 <IoIosArrowBack />
             </button>
             <h4 className={cx('header-title')}>{title}</h4>

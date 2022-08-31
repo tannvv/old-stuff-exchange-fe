@@ -13,7 +13,7 @@ const DefaultLayout: React.FC<Props> = ({ children }: Props) => {
         <div className={cx('wrapper')}>
             <Header />
             <div className={cx('inner', 'container')}>
-                <div className={cx('sidebar')}>
+                <div className={cx('sidebar', 'hidden lg:block')}>
                     <Sidebar />
                 </div>
                 <div className={cx('content')}>{children}</div>

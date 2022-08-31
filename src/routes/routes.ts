@@ -30,6 +30,7 @@ const publicRoutes: Route[] = [
         path: config.routes.profile,
         component: Profile,
         layout: HeaderOnly,
+        className: 'bg-white',
     },
     {
         path: config.routes.notFound,

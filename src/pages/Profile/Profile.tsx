@@ -1,8 +1,8 @@
 import React from 'react';
-import { UserAuth } from '~/context/AuthContext';
+import { useAuth } from '~/context/AuthContext';
 
 const Profile = () => {
-    const { logOut, user } = UserAuth();
+    const { logOut, user } = useAuth()!;
 
     const handleSignOut = async () => {
         try {
@@ -15,7 +15,7 @@ const Profile = () => {
         <div className="w-[300px] m-auto">
             <h1 className="text-center text-2xl font-bold pt-12">Account</h1>
             <div>
-                <p>Welcome, {user?.displayName}</p>
+                <p>Welcome, {user?.fullName}</p>
             </div>
             <button onClick={handleSignOut} className="border py-2 px-5 mt-10">
                 Logout
