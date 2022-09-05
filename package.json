@@ -15,7 +15,10 @@
     "axios": "^0.27.2",
     "babel-plugin-module-resolver": "^4.1.0",
     "classnames": "^2.3.1",
+    "emoji-picker-react": "^3.6.1",
     "firebase": "^9.9.3",
+    "firebase-tools": "^11.8.0",
+    "formik": "^2.2.9",
     "jwt-decode": "^3.1.2",
     "primeicons": "^5.0.0",
     "primereact": "^8.3.0",
@@ -26,8 +29,10 @@
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.4.0",
     "typescript": "^4.7.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "customize-cra": "^1.0.0",
@@ -46,7 +51,14 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "off"
+    }
   },
   "browserslist": {
     "production": [

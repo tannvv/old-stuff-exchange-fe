@@ -1,51 +1,86 @@
-import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 
-import styles from './Home.module.scss';
-import { Card } from '~/components/Card';
-import Post from '~/context/models/Post';
 import { postApi } from '~/api';
-import { useLoading } from '~/context/LoadingContext';
+import { PostListParams } from '~/api/postApi';
+import { Card } from '~/components/Card';
+import { LoadingInside } from '~/components/LoadingInside';
+import { useAuth } from '~/context/AuthContext';
+import Post from '~/context/models/Post';
+import { useToast } from '~/context/ToastContext';
+import styles from './Home.module.scss';
+import { PostFilter } from './PostFilter';
+import { PostList } from './PostList';
 
 const cx = classNames.bind(styles);
 const Home = () => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [page, setPage] = useState(1);
-    const { enableLoading, disableLoading } = useLoading()!;
-    useEffect(() => {
-        enableLoading();
+    const [searchValue, setSearchValue] = useState('');
+    const [categoryValue, setCategoryValue] = useState('');
+
+    const { user } = useAuth()!;
+    const { showError } = useToast()!;
+    const [isLoading, setLoading] = useState<boolean>(false);
+
+    const handleScroll = (e: Event) => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const spaceWithTop = document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        if (windowHeight + spaceWithTop + 1 > scrollHeight) {
+            setPage((prev) => prev + 1);
+        }
+    };
+
+    const refresh = () => {
+        setPosts([]);
+        setPage(1);
+        setLoading(true);
+    };
+
+    const loadPosts = async (params: PostListParams) => {
+        setLoading(true);
         postApi
-            .getList({ page: page, pageSize: 15 })
+            .getList({ ...params })
             .then((response) => {
                 let postData: Post[] = response.data?.map((post: any) => new Post(post));
-                console.log(postData);
-                setPosts(postData);
-                disableLoading();
+                setPosts((prev) => [...prev, ...postData]);
+                setLoading(false);
             })
             .catch((error) => {
-                console.log(error);
-                disableLoading();
+                showError({ detail: error ?? 'Post api is failed' });
+                setLoading(false);
             });
-    }, [page]);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+        loadPosts({
+            page: page,
+            pageSize: 12,
+            status: 'ACTIVE',
+            filterWith: 'TITLE',
+            filterValue: searchValue,
+            categoryId: categoryValue,
+            apartmentId: user?.building?.apartmentId ?? '',
+        });
+    }, [page, searchValue, categoryValue]);
     return (
-        <div className={cx('wrapper', 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10')}>
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
-            <Card className={cx('product-item')} />
+        <div className={cx('wrapper', 'grid grid-cols-5')}>
+            <PostFilter
+                className={cx('hidden col-span-1 lg:block')}
+                setSearchValue={setSearchValue}
+                setCategoryValue={setCategoryValue}
+                onRefresh={refresh}
+            />
+            <PostList posts={posts} isLoading={isLoading} className={cx('col-span-4')} />
         </div>
     );
 };

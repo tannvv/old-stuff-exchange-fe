@@ -1,6 +1,6 @@
 import axiosClient from './axiosClient';
 
-interface PostListParams {
+export interface PostListParams {
     exceptAuthorId?: string;
     apartmentId?: string;
     categoryId?: string;

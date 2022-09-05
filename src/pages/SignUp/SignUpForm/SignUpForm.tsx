@@ -6,17 +6,11 @@ import { Popper } from '~/components/Popper';
 import images from '~/assets/images';
 import { CgArrowsExchange } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
-import Loading from '~/components/Loading';
 
 const cx = classNames.bind(styles);
 const SignUpForm = (): JSX.Element => {
-    const [isLoading, setLoading] = useState(false);
     const handleSignUp = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 3000);
     };
     return (
         <Popper className={cx('wrapper', 'h-full lg:w-screen lg:px-[40px] lg:py-[40px]')}>
@@ -105,7 +99,6 @@ const SignUpForm = (): JSX.Element => {
                         </button>
                     </div>
                 </div>
-                <Loading isShow={isLoading} />
             </div>
         </Popper>
     );

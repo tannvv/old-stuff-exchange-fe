@@ -4,7 +4,6 @@
     box-shadow: 0px 19px 40px rgba(0, 0, 0, 0.06);
     border-radius: 20px;
     padding: 0 40px 70px;
-    transition: all 0.4s linear;
 
     .header {
         display: flex;
@@ -142,7 +141,7 @@
             border-radius: 30px;
             width: 140px;
             font-size: 1.4rem;
-            transition: 0.8s linear;
+            transition: 0.1s linear;
 
             &:hover {
                 transform: translateY(-8%);

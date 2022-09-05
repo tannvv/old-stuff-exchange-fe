@@ -3,7 +3,10 @@ import React, { Fragment } from 'react';
 import { publicRoutes } from '~/routes';
 import { DefaultLayout } from '~/layouts/DefaultLayout';
 import RootContext from './context/RootContext';
-import Loading from './components/Loading';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import RoleBasedGuard from './guards/RoleBasedGuard';
 
 function App() {
     return (
@@ -25,9 +28,11 @@ function App() {
                                     key={index}
                                     path={route.path}
                                     element={
-                                        <Layout className={className}>
-                                            <Page />
-                                        </Layout>
+                                        <RoleBasedGuard accessibleRole={[...(route.accessibleRole ?? [])]}>
+                                            <Layout className={className}>
+                                                <Page />
+                                            </Layout>
+                                        </RoleBasedGuard>
                                     }
                                 />
                             );

@@ -2,7 +2,10 @@ const routes = {
     home: '/',
     login: '/login',
     signUp: '/signUp',
-    profile: '/@:nickname',
+    verifyAddress: '/verify-address',
+    profile: '/profile',
+    chat: '/chat',
+    permissionDenied: '/permission-denied',
     notFound: '*',
 };
 

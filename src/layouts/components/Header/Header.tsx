@@ -30,7 +30,6 @@ function Header(): JSX.Element {
         if (item?.onClick) {
             item.onClick();
         }
-        console.log(item);
     };
 
     const userMenu: IMenuItem[] = [

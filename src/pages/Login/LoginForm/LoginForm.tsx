@@ -6,24 +6,32 @@ import styles from './LoginForm.module.scss';
 import images from '~/assets/images';
 import config from '~/config';
 import { useAuth } from '~/context/AuthContext';
+import { useToast } from '~/context/ToastContext';
+import React from 'react';
 
 const cx = classNames.bind(styles);
 const LoginForm = () => {
     const { googleSignIn, facebookSignIn } = useAuth()!;
+    const { showSuccess, showError } = useToast()!;
 
     const handleGoogleSignIn = async () => {
         try {
             await googleSignIn();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            showError({ detail: error ?? 'loginGoogle failed' });
         }
     };
     const handleFacebookSignIn = async () => {
         try {
             await facebookSignIn();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            showError({ detail: error ?? 'login facebook failed' });
         }
+    };
+
+    const handleSignIn = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        showSuccess({});
     };
 
     return (
@@ -48,7 +56,7 @@ const LoginForm = () => {
                         <input id="password-input" type="text" name="password" className={cx('input')} />
                     </div>
                     <div className={cx('btn-submit')}>
-                        <button className={cx('btn-sign-in')}>
+                        <button className={cx('btn-sign-in')} onClick={handleSignIn}>
                             SIGN IN
                             <span>
                                 <CgArrowsExchange />

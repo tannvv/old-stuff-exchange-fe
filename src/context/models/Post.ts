@@ -31,6 +31,6 @@ export default class Post {
         this.author = params.author ? new User(params.author) : null;
         this.userBought = params.userBought ?? '';
         this.userBoughtObject = params.userBoughtObject ? new User(params.userBoughtObject) : null;
-        this.products = params.product;
+        this.products = params.products;
     }
 }

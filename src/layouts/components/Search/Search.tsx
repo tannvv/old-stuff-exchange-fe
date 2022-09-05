@@ -1,15 +1,14 @@
-// import { Wrapper as PopperWrapper } from '~/components/Popper';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { useEffect, useState, useRef, LegacyRef, MutableRefObject, memo } from 'react';
-import { MdClear } from 'react-icons/md';
-import { FaSpinner } from 'react-icons/fa';
+import { LegacyRef, memo, MutableRefObject, useEffect, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { FaSpinner } from 'react-icons/fa';
+import { MdClear } from 'react-icons/md';
 
 import classNames from 'classnames/bind';
-import styles from './Search.module.scss';
-import { useDebounce } from '~/hooks';
-import { Popper } from '~/components/Popper';
 import { AccountItem } from '~/components/AccountItem';
+import { Popper } from '~/components/Popper';
+import { useDebounce } from '~/hooks';
+import styles from './Search.module.scss';
 
 const cx = classNames.bind(styles);
 function Search() {
@@ -29,8 +28,6 @@ function Search() {
 
         const fetchApi = async () => {
             setIsLoading(true);
-            // const result = await searchService.search(debouncedValue);
-            // setSearchResult(result);
             setIsLoading(false);
         };
         fetchApi();
@@ -79,12 +76,16 @@ function Search() {
                         onFocus={() => setIsShowResult(true)}
                     />
                     {!!searchValue && !isLoading && (
-                        <button className={cx('clear')} onClick={handleClear}>
+                        <button className={cx('clear')} onClick={handleClear} aria-label="clear">
                             <MdClear />
                         </button>
                     )}
                     {isLoading && <FaSpinner className={cx('loading')} />}
-                    <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
+                    <button
+                        className={cx('search-btn')}
+                        onMouseDown={(e) => e.preventDefault()}
+                        aria-label="search-btn"
+                    >
                         <AiOutlineSearch />
                     </button>
                 </div>

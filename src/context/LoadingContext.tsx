@@ -24,7 +24,8 @@ const LoadingContextProvider = ({ children }: Props) => {
     return (
         <LoadingContext.Provider value={{ enableLoading, disableLoading }}>
             {children}
-            <Loading isShow={isLoading} />
+
+            {isLoading && <Loading />}
         </LoadingContext.Provider>
     );
 };

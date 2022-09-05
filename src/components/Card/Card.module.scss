@@ -5,11 +5,23 @@
     box-shadow: 0.2px 0.2px 6px #ccc;
     transition: transform 0.1s linear;
     border: 2px solid white;
+    max-height: 440px;
 
     &:hover {
         transform: translateY(-1px);
         box-shadow: 0.2px 2px 10px #ccc;
         border-color: rgb(226, 223, 223);
+    }
+}
+
+.img {
+    height: 240px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+
+    img {
+        width: 100%;
     }
 }
 

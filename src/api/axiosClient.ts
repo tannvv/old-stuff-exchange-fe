@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+
 import queryString from 'query-string';
 
 const axiosClient = axios.create({
@@ -13,6 +14,8 @@ axiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
     // config request
     const token = localStorage.getItem('token');
     config.headers!.Authorization = `Bearer ${token}`;
+    config.timeout = 100000;
+
     return config;
 });
 

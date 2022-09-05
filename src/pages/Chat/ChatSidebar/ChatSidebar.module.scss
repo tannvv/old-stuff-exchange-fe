@@ -1,0 +1,40 @@
+.wrapper {
+    position: -webkit-sticky;
+    position: sticky;
+    top: var(--default-layout-header-height);
+    height: calc(100vh - var(--default-layout-header-height));
+    background-color: rgb(236, 236, 236);
+}
+
+.current-user {
+    display: flex;
+    background-color: #cccc;
+    padding: 2rem;
+    position: absolute;
+    bottom: 4rem;
+    right: 0;
+    left: 0;
+    border-radius: 1rem;
+
+    img {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+    }
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+    justify-content: center;
+
+}
+
+.name {
+    font-weight: 600;
+}
+
+.email {
+    font-size: 1.2rem;
+}

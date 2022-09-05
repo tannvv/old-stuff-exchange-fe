@@ -1,0 +1,82 @@
+.wrapper {
+    min-height: 50vh;
+    overflow: auto;
+    // margin: 2rem -3rem 1rem -1.6rem;
+    padding: 0.5rem 1rem;
+    border-top: 2px solid rgb(227, 224, 224);
+
+    &::-webkit-scrollbar {
+        width: 0.6rem;
+
+        &-thumb {
+            background-color: transparent;
+            border-radius: 1rem;
+        }
+    }
+
+    &:hover::-webkit-scrollbar {
+        &-thumb {
+            background-color: rgb(231, 228, 228);
+            border-radius: 1rem;
+        }
+    }
+
+
+}
+
+
+// chat-item
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 2rem;
+    transition: all 0.4s;
+
+    &:hover {
+        background-color: rgba($color: #000000, $alpha: 0.03);
+    }
+}
+
+.suggest-account {
+    color: rgba(22, 24, 35, 0.75);
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 0.6rem 0;
+}
+
+.info {
+    padding-left: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    line-height: 1rem;
+    padding-top: 4px;
+
+    .tick {
+        color: rgb(32, 213, 236);
+        padding-left: 1rem;
+    }
+}
+
+.email {
+    font-size: 1.4rem;
+}
+
+.avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+
+}
+
+.selected {
+    background-color: rgb(221, 221, 221);
+}
