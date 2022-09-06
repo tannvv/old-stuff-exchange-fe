@@ -6,8 +6,11 @@ import { BsEmojiSmileFill } from 'react-icons/bs';
 
 import styles from './ChatInput.module.scss';
 
+interface Props {
+    handleSendMsg: (msg: string) => void;
+}
 const cx = classNames.bind(styles);
-const ChatInput = () => {
+const ChatInput = ({ handleSendMsg }: Props) => {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [msg, setMsg] = useState('');
     const handleEmojiPickerHideShow = () => {
@@ -22,7 +25,7 @@ const ChatInput = () => {
     const sendChat = (event: any) => {
         event.preventDefault();
         if (msg.length > 0) {
-            // handleSendMsg(msg);
+            handleSendMsg(msg);
             setMsg('');
         }
     };

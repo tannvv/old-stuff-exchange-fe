@@ -27,8 +27,8 @@ const ChatItem = ({ user, isSelected = false, onClick }: Props) => {
         >
             <Image src={user.imageUrl} alt="avatar" className={cx('avatar')} />
             <div className={cx('info')}>
-                <span className={cx('name')}>
-                    {user.fullName}
+                <span className={cx('name-wrapper')}>
+                    <span className={cx('name')}>{user.fullName}</span>
                     <span className={cx('tick')}>
                         <BsCheckCircleFill />
                     </span>
