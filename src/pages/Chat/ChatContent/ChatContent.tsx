@@ -10,37 +10,108 @@ import Image from '~/components/Image';
 import { ChatInput } from './ChatInput';
 import { useAuth } from '~/context/AuthContext';
 import axiosChatClient, { hostSocketChat } from '~/api/axiosChatClient';
+import {
+    HubConnectionBuilder,
+    LogLevel,
+    HubConnection,
+    HttpTransportType,
+    HubConnectionState,
+} from '@microsoft/signalr';
+import { domainName } from '~/api/axiosClient';
+import { messageApi } from '~/api';
 
 interface Props {
     currentChat?: User;
     className?: string;
 }
+class Message {
+    fromSelf: boolean;
+    message: string;
+
+    constructor(params: any, senderId: string | undefined) {
+        this.fromSelf = params.senderId === senderId;
+        this.message = params.content;
+    }
+}
 const cx = classNames.bind(styles);
 const ChatContent = ({ className, currentChat }: Props) => {
-    const [messages, setMessages] = useState<any[]>([]);
-    const [arrivalMessage, setArrivalMessage] = useState<any>(null);
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [arrivalMessage, setArrivalMessage] = useState<Message | null>(null);
     const scrollRef = useRef<any>();
 
     const socket = useRef<Socket>(io(hostSocketChat));
+    const hubConnection = useRef<HubConnection | null>(null);
     const { user } = useAuth()!;
+
+    // const handleSendMsg = async (msg: string) => {
+    //     if (user && currentChat) {
+    //         await axiosChatClient.post('/api/messages/add-msg', {
+    //             from: user.id,
+    //             to: currentChat.id,
+    //             message: msg,
+    //         });
+    //         socket.current.emit('send-msg', {
+    //             from: user.id,
+    //             to: currentChat.id,
+    //             message: msg,
+    //         });
+    //         const msgs = [...messages];
+    //         msgs.push({ fromSelf: true, message: msg });
+    //         setMessages(msgs);
+    //     }
+    // };
 
     const handleSendMsg = async (msg: string) => {
         if (user && currentChat) {
-            await axiosChatClient.post('/api/messages/add-msg', {
-                from: user.id,
-                to: currentChat.id,
-                message: msg,
+            await messageApi.create({
+                senderId: user.id ?? '',
+                receiverId: currentChat.id,
+                content: msg,
             });
-            socket.current.emit('send-msg', {
-                from: user.id,
-                to: currentChat.id,
-                message: msg,
-            });
+            hubConnection.current?.invoke('SendMessage', currentChat.id, msg);
             const msgs = [...messages];
             msgs.push({ fromSelf: true, message: msg });
             setMessages(msgs);
         }
     };
+
+    // signalR
+
+    const connectHub = async () => {
+        await hubConnection.current?.start();
+        if (hubConnection.current?.state === HubConnectionState.Connected) {
+            hubConnection.current?.invoke('AddUser', user?.id);
+        }
+    };
+
+    const disconnectHub = async () => {
+        if (hubConnection.current?.state === HubConnectionState.Connected) {
+            await hubConnection.current?.invoke('RemoveUser', user?.id);
+            await hubConnection.current?.stop();
+        }
+    };
+
+    useEffect(() => {
+        if (domainName) {
+            hubConnection.current = new HubConnectionBuilder()
+                .withUrl(`${domainName}/chat`, {
+                    skipNegotiation: true,
+                    transport: HttpTransportType.WebSockets,
+                })
+                .configureLogging(LogLevel.Information)
+                .build();
+            hubConnection.current.on('message-receive', (message: string) => {
+                console.log('message : ', message);
+                setArrivalMessage({ fromSelf: false, message: message });
+            });
+            connectHub();
+        }
+        return () => {
+            disconnectHub();
+        };
+    }, []);
+
+    // end signalR
 
     useEffect(() => {
         if (user && hostSocketChat) {
@@ -63,15 +134,32 @@ const ChatContent = ({ className, currentChat }: Props) => {
         scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
+    // useEffect(() => {
+    //     axiosChatClient
+    //         .post('/api/messages/get-msg', {
+    //             from: user?.id,
+    //             to: currentChat?.id,
+    //         })
+    //         .then((response) => {
+    //             setMessages(response.data);
+    //         });
+    // }, [currentChat, user]);
+
     useEffect(() => {
-        axiosChatClient
-            .post('/api/messages/get-msg', {
-                from: user?.id,
-                to: currentChat?.id,
-            })
-            .then((response) => {
-                setMessages(response.data);
-            });
+        if (user?.id && currentChat?.id) {
+            messageApi
+                .getAll({
+                    senderId: user?.id ?? '',
+                    receiverId: currentChat?.id ?? '',
+                    isFull: true,
+                })
+                .then((response) => {
+                    const messageData: Message[] = response.data.map((m: any) => {
+                        return new Message(m, user?.id);
+                    });
+                    setMessages(messageData);
+                });
+        }
     }, [currentChat, user]);
     return (
         <div
@@ -93,11 +181,6 @@ const ChatContent = ({ className, currentChat }: Props) => {
                 {messages.map((message) => {
                     return (
                         <div ref={scrollRef} key={uuidv4()}>
-                            {/* <div className={`message ${message.fromSelf ? 'sended' : 'received'}`}>
-                                <div className="content">
-                                    <p>{message.message}</p>
-                                </div>
-                            </div> */}
                             <div className={cx('message', `${message.fromSelf ? 'sended' : 'received'}`)}>
                                 <div className={cx('content')}>
                                     <p>{message.message}</p>

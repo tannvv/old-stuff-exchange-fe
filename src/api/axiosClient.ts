@@ -32,3 +32,4 @@ axiosClient.interceptors.response.use(
 );
 
 export default axiosClient;
+export const domainName = 'https://old-stuff-exchange.azurewebsites.net';
