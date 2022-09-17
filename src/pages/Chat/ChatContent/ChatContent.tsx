@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { BiPowerOff } from 'react-icons/bi';
-import { io, Socket } from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 
 import styles from './ChatContent.module.scss';
@@ -9,7 +8,6 @@ import { User } from '~/context/models';
 import Image from '~/components/Image';
 import { ChatInput } from './ChatInput';
 import { useAuth } from '~/context/AuthContext';
-import axiosChatClient, { hostSocketChat } from '~/api/axiosChatClient';
 import {
     HubConnectionBuilder,
     LogLevel,
@@ -19,6 +17,7 @@ import {
 } from '@microsoft/signalr';
 import { domainName } from '~/api/axiosClient';
 import { messageApi } from '~/api';
+import { async } from '@firebase/util';
 
 interface Props {
     currentChat?: User;
@@ -39,7 +38,7 @@ const ChatContent = ({ className, currentChat }: Props) => {
     const [arrivalMessage, setArrivalMessage] = useState<Message | null>(null);
     const scrollRef = useRef<any>();
 
-    const socket = useRef<Socket>(io(hostSocketChat));
+    // const socket = useRef<Socket>(io(hostSocketChat));
     const hubConnection = useRef<HubConnection | null>(null);
     const { user } = useAuth()!;
 
@@ -78,53 +77,64 @@ const ChatContent = ({ className, currentChat }: Props) => {
     // signalR
 
     const connectHub = async () => {
-        await hubConnection.current?.start();
-        if (hubConnection.current?.state === HubConnectionState.Connected) {
-            hubConnection.current?.invoke('AddUser', user?.id);
+        try {
+            await hubConnection.current?.start();
+            if (hubConnection.current?.state === HubConnectionState.Connected) {
+                await hubConnection.current?.invoke('AddUser', user?.id);
+            }
+        } catch (error) {
+            console.warn(error);
         }
     };
 
     const disconnectHub = async () => {
-        if (hubConnection.current?.state === HubConnectionState.Connected) {
-            await hubConnection.current?.invoke('RemoveUser', user?.id);
-            await hubConnection.current?.stop();
+        try {
+            if (hubConnection.current?.state === HubConnectionState.Connected) {
+                await hubConnection.current?.invoke('RemoveUser', user?.id);
+                await hubConnection.current?.stop();
+                hubConnection.current = null;
+            }
+        } catch (error) {
+            console.warn(error);
         }
     };
 
     useEffect(() => {
-        if (domainName) {
-            hubConnection.current = new HubConnectionBuilder()
-                .withUrl(`${domainName}/chat`, {
-                    skipNegotiation: true,
-                    transport: HttpTransportType.WebSockets,
-                })
-                .configureLogging(LogLevel.Information)
-                .build();
-            hubConnection.current.on('message-receive', (message: string) => {
-                console.log('message : ', message);
-                setArrivalMessage({ fromSelf: false, message: message });
-            });
-            connectHub();
+        if (hubConnection.current?.state === HubConnectionState.Connected) {
+            hubConnection.current.stop();
         }
+        hubConnection.current = new HubConnectionBuilder()
+            .withUrl(`${domainName}/chat`, {
+                skipNegotiation: true,
+                transport: HttpTransportType.WebSockets,
+            })
+            .configureLogging(LogLevel.Information)
+            .build();
+        hubConnection.current.on('message-receive', (message: string, senderId: string) => {
+            if (senderId === currentChat?.id) {
+                setArrivalMessage({ fromSelf: false, message: message });
+            }
+        });
+        connectHub();
         return () => {
             disconnectHub();
         };
-    }, []);
+    }, [currentChat]);
 
     // end signalR
 
-    useEffect(() => {
-        if (user && hostSocketChat) {
-            socket.current.emit('add-user', user.id);
+    // useEffect(() => {
+    //     if (user && hostSocketChat) {
+    //         socket.current.emit('add-user', user.id);
 
-            socket.current.on('msg-receive', (msg: string) => {
-                setArrivalMessage({ fromSelf: false, message: msg });
-            });
-        }
-        return () => {
-            socket.current.off('msg-receive');
-        };
-    }, []);
+    //         socket.current.on('msg-receive', (msg: string) => {
+    //             setArrivalMessage({ fromSelf: false, message: msg });
+    //         });
+    //     }
+    //     return () => {
+    //         socket.current.off('msg-receive');
+    //     };
+    // }, []);
 
     useEffect(() => {
         arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);

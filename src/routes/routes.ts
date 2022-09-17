@@ -50,7 +50,7 @@ const publicRoutes: Route[] = [
         path: config.routes.profile,
         component: Profile,
         layout: HeaderOnly,
-        className: 'bg-white',
+        className: 'bg-[#F5F5F5]',
         accessibleRole: [RoleName.RESIDENT],
     },
     {

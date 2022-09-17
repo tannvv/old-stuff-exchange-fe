@@ -1,6 +1,12 @@
 import React from 'react';
-import { useAuth } from '~/context/AuthContext';
+import classNames from 'classnames/bind';
 
+import styles from './Profile.module.scss';
+import { useAuth } from '~/context/AuthContext';
+import { AboutUs } from './AboutUs';
+import { Wallet } from './Wallet';
+
+const cx = classNames.bind(styles);
 const Profile = () => {
     const { logOut, user } = useAuth()!;
 
@@ -10,15 +16,13 @@ const Profile = () => {
         } catch (error) {}
     };
     return (
-        <div className="w-[300px] m-auto">
-            <h1 className="text-center text-2xl font-bold pt-12">Account</h1>
-            <div>
-                <p>Welcome, {user?.fullName}</p>
-                <p>Welcome, {user?.building?.name}</p>
+        <div className={cx('wrapper', 'grid grid-cols-5')}>
+            <div className={cx('about-us', 'col-span-3')}>
+                <AboutUs />
             </div>
-            <button onClick={handleSignOut} className="border py-2 px-5 mt-10">
-                Logout
-            </button>
+            <div className={cx('wallet', 'col-span-2')}>
+                <Wallet />
+            </div>
         </div>
     );
 };

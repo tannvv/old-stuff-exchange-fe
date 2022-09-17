@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { userApi } from '~/api';
 import { useAuth } from '~/context/AuthContext';
 import { User } from '~/context/models';
+import { Splitter, SplitterPanel, SplitterResizeEndParams } from 'primereact/splitter';
 
 import styles from './Chat.module.scss';
 import { ChatContent } from './ChatContent';
@@ -13,11 +14,28 @@ const cx = classNames.bind(styles);
 const Chat = () => {
     const [usersChat, setUsersChat] = useState<User[]>([]);
     const [currentChat, setCurrentChat] = useState<User | undefined>(undefined);
+    const [splitterSize, setSplitterSize] = useState<number[]>([25, 75]);
 
     const [searchParams] = useSearchParams();
     const { user } = useAuth()!;
 
+    const handleResizedEnd = (event: SplitterResizeEndParams) => {
+        localStorage.setItem('splitter-size', JSON.stringify(event.sizes));
+    };
+
     useEffect(() => {
+        if (localStorage.getItem('splitter-size')) {
+            const sizes: number[] = JSON.parse(localStorage.getItem('splitter-size') ?? '');
+            setSplitterSize(sizes);
+        }
+    }, [currentChat]);
+
+    useEffect(() => {
+        if (localStorage.getItem('splitter-size')) {
+            const sizes: number[] = JSON.parse(localStorage.getItem('splitter-size') ?? '');
+            setSplitterSize(sizes);
+        }
+
         if (user) {
             userApi
                 .getList({ apartmentId: user.building?.apartmentId, pageNumber: 1, pageSize: 100 })
@@ -29,9 +47,15 @@ const Chat = () => {
         }
     }, []);
     return (
-        <div className={cx('wrapper', 'grid grid-cols-4')}>
-            <ChatSidebar className={cx('col-span-1')} usersChat={usersChat} setCurrentChat={setCurrentChat} />
-            <ChatContent className={cx('col-span-3')} currentChat={currentChat} />
+        <div className={cx('wrapper')}>
+            <Splitter onResizeEnd={handleResizedEnd} style={{ border: '1px solid #F5F5F5' }} stateKey="splitter-sizes">
+                <SplitterPanel className={cx('suggest-account')} size={splitterSize[0]}>
+                    <ChatSidebar className={cx('w-full')} usersChat={usersChat} setCurrentChat={setCurrentChat} />
+                </SplitterPanel>
+                <SplitterPanel className={cx('chat-content')} size={splitterSize[1]} minSize={40}>
+                    <ChatContent className={cx('w-full')} currentChat={currentChat} />
+                </SplitterPanel>
+            </Splitter>
         </div>
     );
 };

@@ -19,9 +19,11 @@ import Menu from '~/components/Popper/Menu';
 import IMenuItem from '~/interfaces/IMenuItem';
 import { useAuth } from '~/context/AuthContext';
 
+interface Props {
+    className?: string;
+}
 const cx = classNames.bind(styles);
-
-function Header(): JSX.Element {
+function Header({ className }: Props): JSX.Element {
     const inboxNumber = 2;
     const location = useLocation();
     const { logOut, user } = useAuth()!;
@@ -57,7 +59,11 @@ function Header(): JSX.Element {
         },
     ];
     return (
-        <header className={cx('wrapper')}>
+        <header
+            className={cx('wrapper', {
+                [className as string]: className,
+            })}
+        >
             <div className={cx('inner', 'container')}>
                 <Link to={config.routes.home} className={cx('logo-link')}>
                     <Image src={images.logo} alt="TikTok" className={cx('logo-img')} />
