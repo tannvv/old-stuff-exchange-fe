@@ -1,5 +1,6 @@
 import { createContext, useContext, useRef } from 'react';
 import { Toast } from 'primereact/toast';
+import { ConfirmDialog } from 'primereact/confirmdialog';
 
 interface ToastProps {
     summary?: string;
@@ -64,6 +65,7 @@ const ToastContextProvider = ({ children }: Props) => {
         <ToastContext.Provider value={{ showSuccess, showInfo, showWarn, showError, clear }}>
             {children}
             <Toast ref={toast} className="text-lg w-[300px] md:text-xl md:w-[400px] md:leading-loose" />
+            <ConfirmDialog />
         </ToastContext.Provider>
     );
 };

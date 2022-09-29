@@ -62,7 +62,6 @@ const VerifyAddressForm = () => {
                     navigate(config.routes.profile);
                 })
                 .catch((error) => {
-                    console.log(error);
                     showError({ detail: error ?? 'Update failed' });
                 });
         }

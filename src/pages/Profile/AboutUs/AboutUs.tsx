@@ -21,7 +21,7 @@ const AboutUs = () => {
             <div className={cx('about')}>
                 <div className={cx('about-control')}>
                     <p className={cx('label')}>Số điện thoại</p>
-                    <span className={cx('value')}>{user?.phone ? user?.phone : '+38 4616791'}</span>
+                    <span className={cx('value')}>{user?.phone ? user?.phone : '+84 384616791'}</span>
                 </div>
                 <div className={cx('about-control')}>
                     <p className={cx('label')}>Facebook</p>

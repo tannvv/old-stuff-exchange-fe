@@ -23,6 +23,7 @@ const PostFilter = ({ className, setCategoryValue, setSearchValue, onRefresh }: 
     const [searchValue, setSearch] = useState('');
     const [options, setOptions] = useState([]);
     const [usersChat, setUsersChat] = useState<User[]>([]);
+    const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
     const { user } = useAuth()!;
     const debounceValue = useDebounce(searchValue, 500);
@@ -88,9 +89,18 @@ const PostFilter = ({ className, setCategoryValue, setSearchValue, onRefresh }: 
                         className={cx('select')}
                         styles={colorStyles}
                         onChange={handleSelect}
+                        placeholder="Select category"
                     />
                 </div>
-                {user && <SuggestChat users={usersChat} className={cx('suggest-accounts')} clickType={'navigate'} />}
+                {user && (
+                    <SuggestChat
+                        users={usersChat}
+                        className={cx('suggest-accounts')}
+                        clickType={'navigate'}
+                        selectedIndex={selectedIndex}
+                        setSelectedIndex={setSelectedIndex}
+                    />
+                )}
                 <div className={cx('info')}>
                     <p className={cx('about-us')}>About us</p>
                     <span className={cx('about-content')}>Lorem ipsum dolor sit amet consectetur adipisicing elit</span>

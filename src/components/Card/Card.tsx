@@ -1,9 +1,11 @@
 import React from 'react';
 import classNames from 'classnames/bind';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './Card.module.scss';
 import Post from '~/context/models/Post';
 import Image from '~/components/Image';
+import config from '~/config';
 
 interface Props {
     className?: string;
@@ -11,11 +13,13 @@ interface Props {
 }
 const cx = classNames.bind(styles);
 const Card = ({ className, post }: Props) => {
+    const navigate = useNavigate();
     return (
         <div
             className={cx('wrapper', {
                 [className as string]: className,
             })}
+            onClick={() => navigate(`${config.routes.detailPost}?id=${post.id}`)}
         >
             <div className={cx('img')}>
                 <Image src={post.imageUrl} alt="img" />

@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { BiPowerOff } from 'react-icons/bi';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+import { BsArrowUpSquare } from 'react-icons/bs';
 
 import styles from './ChatContent.module.scss';
 import { User } from '~/context/models';
@@ -17,10 +19,12 @@ import {
 } from '@microsoft/signalr';
 import { domainName } from '~/api/axiosClient';
 import { messageApi } from '~/api';
-import { async } from '@firebase/util';
+import images from '~/assets/images';
 
 interface Props {
     currentChat?: User;
+    setCurrentChat?: React.Dispatch<React.SetStateAction<User | undefined>>;
+    setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
     className?: string;
 }
 class Message {
@@ -33,11 +37,12 @@ class Message {
     }
 }
 const cx = classNames.bind(styles);
-const ChatContent = ({ className, currentChat }: Props) => {
+const ChatContent = ({ className, currentChat, setCurrentChat, setSelectedIndex }: Props) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [arrivalMessage, setArrivalMessage] = useState<Message | null>(null);
     const scrollRef = useRef<any>();
 
+    const navigate = useNavigate();
     // const socket = useRef<Socket>(io(hostSocketChat));
     const hubConnection = useRef<HubConnection | null>(null);
     const { user } = useAuth()!;
@@ -74,6 +79,16 @@ const ChatContent = ({ className, currentChat }: Props) => {
         }
     };
 
+    const handleOffChat = () => {
+        setCurrentChat!(undefined);
+        setSelectedIndex(-1);
+        navigate('/chat');
+    };
+
+    const handleScrollTop = () => {
+        scrollRef.current?.scrollTo(0, 0);
+    };
+
     // signalR
 
     const connectHub = async () => {
@@ -90,7 +105,7 @@ const ChatContent = ({ className, currentChat }: Props) => {
     const disconnectHub = async () => {
         try {
             if (hubConnection.current?.state === HubConnectionState.Connected) {
-                await hubConnection.current?.invoke('RemoveUser', user?.id);
+                // await hubConnection.current?.invoke('RemoveUser', user?.id);
                 await hubConnection.current?.stop();
                 hubConnection.current = null;
             }
@@ -100,9 +115,10 @@ const ChatContent = ({ className, currentChat }: Props) => {
     };
 
     useEffect(() => {
-        if (hubConnection.current?.state === HubConnectionState.Connected) {
-            hubConnection.current.stop();
-        }
+        // if (hubConnection.current?.state === HubConnectionState.Connected) {
+        //     hubConnection.current.stop();
+        //     hubConnection.current = null;
+        // }
         hubConnection.current = new HubConnectionBuilder()
             .withUrl(`${domainName}/chat`, {
                 skipNegotiation: true,
@@ -171,37 +187,47 @@ const ChatContent = ({ className, currentChat }: Props) => {
                 });
         }
     }, [currentChat, user]);
+
     return (
         <div
             className={cx('wrapper', {
                 [className as string]: className,
             })}
         >
-            <div className={cx('header')}>
-                <div className={cx('info')}>
-                    <Image src={currentChat?.imageUrl} alt="avatar" className={cx('avatar')} />
-                    <p className={cx('name')}>{currentChat?.fullName}</p>
-                </div>
-                <button className={cx('btn-off')}>
-                    <BiPowerOff />
-                    {''}
-                </button>
-            </div>
-            <div className={cx('chat-messages')}>
-                {messages.map((message) => {
-                    return (
-                        <div ref={scrollRef} key={uuidv4()}>
-                            <div className={cx('message', `${message.fromSelf ? 'sended' : 'received'}`)}>
-                                <div className={cx('content')}>
-                                    <p>{message.message}</p>
-                                </div>
-                            </div>
+            {currentChat ? (
+                <div className={cx('inner')}>
+                    <div className={cx('header')}>
+                        <div className={cx('info')}>
+                            <Image src={currentChat?.imageUrl} alt="avatar" className={cx('avatar')} />
+                            <p className={cx('name')}>{currentChat?.fullName}</p>
                         </div>
-                    );
-                })}
-            </div>
+                        <button className={cx('btn-off')} onClick={handleOffChat}>
+                            <BiPowerOff />
+                            {''}
+                        </button>
+                    </div>
+                    <div className={cx('chat-messages')}>
+                        {messages.map((message) => {
+                            return (
+                                <div ref={scrollRef} key={uuidv4()}>
+                                    <div className={cx('message', `${message.fromSelf ? 'sended' : 'received'}`)}>
+                                        <div className={cx('content')}>
+                                            <p>{message.message}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                        {/* <button className={cx('scroll-top')} onClick={handleScrollTop}>
+                            <BsArrowUpSquare />
+                        </button> */}
+                    </div>
 
-            <ChatInput handleSendMsg={handleSendMsg} />
+                    <ChatInput handleSendMsg={handleSendMsg} />
+                </div>
+            ) : (
+                <img src={images.robot} alt="Robot" className={cx('robot')} />
+            )}
         </div>
     );
 };

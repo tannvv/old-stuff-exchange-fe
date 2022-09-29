@@ -12,7 +12,7 @@ const HeaderOnly: React.FC<Props> = ({ children, className }: Props) => {
     return (
         <div className={cx('wrapper', { [className as string]: className })}>
             <div className={cx('container 2xl:max-w-[1400px]')}>
-                <Header className={cx('px-20')} />
+                <Header className={cx('md:px-20')} />
                 <div className={cx('content')}>{children}</div>
             </div>
         </div>

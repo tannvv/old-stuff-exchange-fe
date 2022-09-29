@@ -5,40 +5,40 @@ import { IoCreateOutline } from 'react-icons/io5';
 import IMenuItem from '~/interfaces/IMenuItem';
 
 export const MENU_ITEMS: IMenuItem[] = [
-    {
-        icon: GrLanguage,
-        title: 'Language',
-        children: {
-            title: 'Language',
-            data: [
-                {
-                    code: 'en',
-                    title: 'English',
-                    children: {
-                        title: 'English',
-                        data: [
-                            {
-                                code: 'unitedState',
-                                title: 'United state',
-                            },
-                            {
-                                code: 'unitedKingdom',
-                                title: 'United kingdom',
-                            },
-                        ],
-                    },
-                },
-                {
-                    code: 'vi',
-                    title: 'Vietnamese',
-                },
-                {
-                    code: 'cn',
-                    title: 'Chinese',
-                },
-            ],
-        },
-    },
+    // {
+    //     icon: GrLanguage,
+    //     title: 'Language',
+    //     children: {
+    //         title: 'Language',
+    //         data: [
+    //             {
+    //                 code: 'en',
+    //                 title: 'English',
+    //                 children: {
+    //                     title: 'English',
+    //                     data: [
+    //                         {
+    //                             code: 'unitedState',
+    //                             title: 'United state',
+    //                         },
+    //                         {
+    //                             code: 'unitedKingdom',
+    //                             title: 'United kingdom',
+    //                         },
+    //                     ],
+    //                 },
+    //             },
+    //             {
+    //                 code: 'vi',
+    //                 title: 'Vietnamese',
+    //             },
+    //             {
+    //                 code: 'cn',
+    //                 title: 'Chinese',
+    //             },
+    //         ],
+    //     },
+    // },
     {
         icon: CgProfile,
         title: 'Profile',

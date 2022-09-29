@@ -1,0 +1,137 @@
+// post item
+.post-item {
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 1rem;
+    background-color: #f8f8f8;
+    border-radius: 14px;
+    transition: transform 0.1s ease-in-out;
+    position: relative;
+
+    .btn-action {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 1.4rem;
+        padding: 0.4rem 1.2rem;
+        background-color: rgb(57, 167, 57);
+        color: white;
+        border-top-right-radius: 14px;
+        border-bottom-left-radius: 8px;
+
+        &:hover {
+            // transform: translateY(-2px);
+            box-shadow: 2px 2px 2px 1px rgb(230, 230, 230);
+        }
+    }
+
+    &:hover {
+        // transform: translateY(-2px);
+        // box-shadow: 2px 2px 2px 1px rgb(230, 230, 230);
+    }
+
+    .image {
+        flex: 1;
+        width: 10px;
+        height: calc(100% - 20px);
+        border-radius: 8px;
+        object-fit: fill;
+    }
+
+    .content {
+        padding: 0.6rem 0.6rem 0 1.6rem;
+        width: calc(100% - 100px);
+    }
+
+    .title {
+        font-size: 1.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .description {
+        font-size: 1.5rem;
+        padding-top: 2px;
+        width: 100%;
+        display: flex;
+
+        .label {
+            color: rgb(180, 179, 179);
+        }
+
+        .text {
+            padding-left: 4px;
+            color: var(--text-color);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 2rem;
+            height: 4rem;
+            -webkit-line-clamp: 2;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            font-size: 1.4rem;
+        }
+
+    }
+
+    .price {
+        font-size: 1.4rem;
+        padding-top: 2px;
+
+        .label {
+            color: rgb(180, 179, 179);
+        }
+
+        .text {
+            color: rgb(238, 110, 110);
+            font-weight: 600;
+        }
+
+    }
+
+    .status {
+        font-size: 1.4rem;
+        color: rgb(64, 64, 138);
+
+        .label {
+            color: rgb(180, 179, 179);
+            font-weight: 600;
+        }
+
+        .value {
+            font-weight: 600;
+
+        }
+
+        .inactive {
+            color: rgb(245, 79, 79);
+        }
+
+        .active {
+            color: rgb(50, 151, 50);
+        }
+
+        .waiting {
+            color: rgb(167, 167, 1);
+        }
+    }
+
+    .user-bought {
+        display: flex;
+        align-items: center;
+        padding: 0 0 4px 0;
+        width: 100%;
+        justify-content: end;
+
+        .name {
+            font-size: 1.2rem;
+            color: #ccc;
+            padding-right: 0.6rem;
+        }
+    }
+
+    .icon-check {
+        color: rgb(168, 223, 87);
+    }
+}

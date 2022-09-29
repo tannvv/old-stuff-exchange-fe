@@ -1,5 +1,6 @@
 import Building from './Building';
 import Role from './Role';
+import Wallet from './Wallet';
 
 export default class User {
     id: string;
@@ -12,6 +13,7 @@ export default class User {
     gender: string;
     role: Role | null;
     building: Building | null;
+    wallets: Wallet[] | undefined;
 
     constructor(params: any) {
         this.id = params.id ?? '';

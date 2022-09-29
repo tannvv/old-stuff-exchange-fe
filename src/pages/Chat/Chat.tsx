@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { userApi } from '~/api';
 import { useAuth } from '~/context/AuthContext';
 import { User } from '~/context/models';
@@ -15,6 +15,7 @@ const Chat = () => {
     const [usersChat, setUsersChat] = useState<User[]>([]);
     const [currentChat, setCurrentChat] = useState<User | undefined>(undefined);
     const [splitterSize, setSplitterSize] = useState<number[]>([25, 75]);
+    const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
     const [searchParams] = useSearchParams();
     const { user } = useAuth()!;
@@ -43,6 +44,12 @@ const Chat = () => {
                     let usersData: User[] = response.data.map((user: any) => new User(user));
                     usersData = usersData.filter((u) => u.id !== user.id);
                     setUsersChat(usersData);
+                    const userChatId = searchParams.get('userId');
+                    if (userChatId) {
+                        const userChatIndex = usersData.findIndex((u) => u.id === userChatId);
+                        setCurrentChat(usersData[userChatIndex]);
+                        setSelectedIndex(userChatIndex);
+                    }
                 });
         }
     }, []);
@@ -50,10 +57,21 @@ const Chat = () => {
         <div className={cx('wrapper')}>
             <Splitter onResizeEnd={handleResizedEnd} style={{ border: '1px solid #F5F5F5' }} stateKey="splitter-sizes">
                 <SplitterPanel className={cx('suggest-account')} size={splitterSize[0]}>
-                    <ChatSidebar className={cx('w-full')} usersChat={usersChat} setCurrentChat={setCurrentChat} />
+                    <ChatSidebar
+                        className={cx('w-full')}
+                        usersChat={usersChat}
+                        setCurrentChat={setCurrentChat}
+                        selectedIndex={selectedIndex}
+                        setSelectedIndex={setSelectedIndex}
+                    />
                 </SplitterPanel>
                 <SplitterPanel className={cx('chat-content')} size={splitterSize[1]} minSize={40}>
-                    <ChatContent className={cx('w-full')} currentChat={currentChat} />
+                    <ChatContent
+                        className={cx('w-full')}
+                        currentChat={currentChat}
+                        setCurrentChat={setCurrentChat}
+                        setSelectedIndex={setSelectedIndex}
+                    />
                 </SplitterPanel>
             </Splitter>
         </div>

@@ -10,9 +10,9 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { User as UserFirebase } from 'firebase/auth';
 
 import { useNavigate } from 'react-router-dom';
-import { authorizeApi } from '~/api';
+import { authorizeApi, walletApi } from '~/api';
 import config from '~/config';
-import { User } from '~/context/models';
+import { User, Wallet } from '~/context/models';
 import { auth } from '~/firebase';
 import { useLoading } from './LoadingContext';
 
@@ -21,6 +21,7 @@ interface AuthValue {
     facebookSignIn: () => Promise<void>;
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
     logOut: () => void;
+    refreshWallets: () => Promise<void>;
     currentRole: string;
     isAuth: boolean;
     user: User | null;
@@ -38,6 +39,17 @@ const AuthContextProvider = ({ children }: Props) => {
     const navigate = useNavigate();
     const isExistedUser = useRef(false);
 
+    const refreshWallets = async () => {
+        if (user) {
+            const responseWallets = await walletApi.getWalletByUserId(user?.id);
+            const wallets = responseWallets?.data?.map((wallet: any) => {
+                return new Wallet(wallet);
+            });
+            const userData = { ...user, wallets: wallets };
+            setUser(userData);
+        }
+    };
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(
             auth,
@@ -51,13 +63,18 @@ const AuthContextProvider = ({ children }: Props) => {
                         const beToken = response?.data?.token;
                         const userData = response?.data?.user;
                         if (beToken && userData) {
-                            localStorage.setItem('token', beToken ?? '');
+                            localStorage.setItem('access_token', beToken ?? '');
                             const userObj = new User(userData);
+                            const responseWallets = await walletApi.getWalletByUserId(userObj.id);
+                            const wallets = responseWallets?.data?.map((wallet: any) => {
+                                return new Wallet(wallet);
+                            });
+                            userObj.wallets = wallets;
                             setUser(userObj);
                             setAuth(true);
                             setCurrentRole(userObj.role?.name ?? '');
                             if (userObj?.building) {
-                                navigate(config.routes.profile);
+                                navigate(config.routes.home);
                             } else {
                                 navigate(config.routes.verifyAddress);
                             }
@@ -91,12 +108,14 @@ const AuthContextProvider = ({ children }: Props) => {
     };
 
     const logOut = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('access_token');
         signOut(auth);
     };
 
     return (
-        <AuthContext.Provider value={{ googleSignIn, logOut, facebookSignIn, user, currentRole, isAuth, setUser }}>
+        <AuthContext.Provider
+            value={{ googleSignIn, logOut, facebookSignIn, user, currentRole, isAuth, setUser, refreshWallets }}
+        >
             {children}
         </AuthContext.Provider>
     );

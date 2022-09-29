@@ -1,12 +1,46 @@
 .wrapper {
     height: 100%;
     width: 100%;
-    padding-left: 2rem;
-
+    background-color: white;
+    border-left: 4px solid #F5F5F5;
 
     .img {
         height: 100%;
         position: relative;
         top: -60px;
     }
+}
+
+.header {
+    padding: 2rem 4rem;
+
+    span {
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    border-bottom: 4px solid #F5F5F5;
+}
+
+.content {
+    padding: 2rem;
+    border-bottom: 4px solid #F5F5F5;
+}
+
+.wallet {
+    font-size: 1.5rem;
+}
+
+.label {
+    font-weight: 600;
+    color: #ccc;
+}
+
+.balance {
+    font-weight: 600;
+    color: rgb(45, 143, 45);
+}
+
+.transaction {
+    margin-top: 2rem;
 }

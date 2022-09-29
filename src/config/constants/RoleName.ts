@@ -1,4 +1,5 @@
-export const RoleName = {
+const RoleName = {
     ADMIN: 'ADMIN',
     RESIDENT: 'RESIDENT',
 };
+export default RoleName;

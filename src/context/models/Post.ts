@@ -1,4 +1,4 @@
-import { User } from '~/context/models';
+import { User, Product } from '~/context/models';
 export default class Post {
     id: string;
     title: string;
@@ -14,7 +14,7 @@ export default class Post {
     author: User | null;
     userBought: string;
     userBoughtObject: User | null;
-    products: any;
+    products: Product[] | null;
 
     constructor(params: any) {
         this.id = params.id;
@@ -31,6 +31,6 @@ export default class Post {
         this.author = params.author ? new User(params.author) : null;
         this.userBought = params.userBought ?? '';
         this.userBoughtObject = params.userBoughtObject ? new User(params.userBoughtObject) : null;
-        this.products = params.products;
+        this.products = params.products?.map((po: any) => new Product(po));
     }
 }

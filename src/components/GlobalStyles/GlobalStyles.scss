@@ -1,17 +1,24 @@
 :root {
     --primary: #F47458;
     --black: #000;
-    --text-color: #333;
+    --text-color: rgb(70, 69, 69);
     --white: #fff;
     --bg-button-color: #F47458;
     --bg-button-color-active: #f16c4e;
     --bg-violet: #46435f;
+    --input-color: #FFF6F4;
+    --text-color-field: rgb(110, 109, 109);
+    --price-color: rgb(252, 94, 94);
 
     --font-family: 'ProximaNova', sans-serif;
 
     // default layout
     --default-layout-header-height: 70px;
     --default-layout-horizontal-spacer: 24px;
+
+    // font size
+    --error-font-size: 1.4rem;
+    --error-color: #fe4a49;
 }
 
 * {
@@ -61,6 +68,7 @@ a {
     color: var(--text-color);
     text-decoration: none;
 }
+
 
 // Fonts embedded
 @font-face {
@@ -114,4 +122,42 @@ body {
     .tippy-box[data-placement^='bottom']>.tippy-arrow::before {
         top: -8px;
     }
+
+
+}
+
+.infinite-scroll-component {
+    &::-webkit-scrollbar {
+        width: 0.6rem;
+
+        &-thumb {
+            background-color: #ffffff39;
+            border-radius: 1rem;
+        }
+
+
+    }
+
+    &:hover::-webkit-scrollbar {
+        &-thumb {
+            background-color: rgb(231, 228, 228);
+            border-radius: 1rem;
+        }
+    }
+}
+
+// primeng
+
+*[class^='p-'] {
+    font-size: 1.6rem;
+}
+
+.pi {
+    font-size: 1.6rem;
+}
+
+.p-carousel-next,
+.p-carousel-prev {
+    width: 3.2rem !important;
+    height: 3.2rem !important;
 }

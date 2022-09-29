@@ -12,7 +12,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
     // config request
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('access_token');
     config.headers!.Authorization = `Bearer ${token}`;
     config.timeout = 100000;
 
@@ -32,4 +32,4 @@ axiosClient.interceptors.response.use(
 );
 
 export default axiosClient;
-export const domainName = 'https://old-stuff-exchange.azurewebsites.net';
+export const domainName = process.env.REACT_APP_DOMAIN;

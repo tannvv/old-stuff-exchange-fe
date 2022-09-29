@@ -69,6 +69,7 @@ const Home = () => {
             filterWith: 'TITLE',
             filterValue: searchValue,
             categoryId: categoryValue,
+            exceptAuthorId: user?.id,
             apartmentId: user?.building?.apartmentId ?? '',
         });
     }, [page, searchValue, categoryValue]);

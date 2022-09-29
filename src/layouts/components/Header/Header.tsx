@@ -5,7 +5,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineUpload, AiOutlineCloudUpload, AiOutlineUser, AiOutlineLogout } from 'react-icons/ai';
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
 import { RiCoinLine } from 'react-icons/ri';
-import { BsGear } from 'react-icons/bs';
+import { BsGear, BsFilePostFill } from 'react-icons/bs';
+import { GiBuyCard } from 'react-icons/gi';
 
 import config from '~/config';
 import styles from './Header.module.scss';
@@ -36,19 +37,14 @@ function Header({ className }: Props): JSX.Element {
 
     const userMenu: IMenuItem[] = [
         {
-            icon: AiOutlineUser,
-            title: 'View profile',
-            to: '/@tannv',
+            icon: BsFilePostFill,
+            title: 'Post sale',
+            to: config.routes.posts,
         },
         {
-            icon: RiCoinLine,
-            title: 'Get coins',
-            to: '/coin',
-        },
-        {
-            icon: BsGear,
-            title: 'Settings',
-            to: '/settings',
+            icon: GiBuyCard,
+            title: 'Post buy',
+            to: config.routes.postsBuy,
         },
         ...MENU_ITEMS,
         {
@@ -69,23 +65,25 @@ function Header({ className }: Props): JSX.Element {
                     <Image src={images.logo} alt="TikTok" className={cx('logo-img')} />
                     <div className={cx('app-name', 'hidden lg:block')}>OLD STUFF EXCHANGE</div>
                 </Link>
-                <div className={cx('', 'w-[76%] md:w-[361px]')}>
+                <div className={cx('', 'w-[74%] md:w-[361px] lg:w-[400px] xl:w-[500px]')}>
                     <Search />
                 </div>
                 <div className={cx('actions', 'ml-[0]')}>
                     {user ? (
                         <>
-                            <Tippy content="Upload video" delay={100}>
-                                <button className={cx('action-btn')} aria-label="action-btn">
-                                    <AiOutlineUpload />
-                                </button>
-                            </Tippy>
-                            <Tippy content="Inbox" delay={100}>
-                                <button className={cx('action-btn')}>
-                                    <AiOutlineCloudUpload />
-                                    <span className={cx('number-inbox')}>{inboxNumber}</span>
-                                </button>
-                            </Tippy>
+                            <div className="hidden lg:flex">
+                                <Tippy content="Create post" delay={100}>
+                                    <Link className={cx('action-btn')} aria-label="action-btn" to={'/create-post'}>
+                                        <AiOutlineUpload />
+                                    </Link>
+                                </Tippy>
+                                <Tippy content="Inbox" delay={100} interactive={true}>
+                                    <Link className={cx('action-btn')} to={'/chat'}>
+                                        <AiOutlineCloudUpload />
+                                        <span className={cx('number-inbox')}>{inboxNumber}</span>
+                                    </Link>
+                                </Tippy>
+                            </div>
                         </>
                     ) : (
                         <>

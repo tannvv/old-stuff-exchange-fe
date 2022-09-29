@@ -12,11 +12,13 @@ interface Props {
     users: User[];
     className?: string;
     clickType?: string;
+    selectedIndex: number;
+    setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
     onClick?: (user: User) => void;
 }
 const cx = classNames.bind(styles);
-const SuggestChat = ({ users, className, clickType, onClick }: Props) => {
-    const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+const SuggestChat = ({ users, className, clickType, onClick, selectedIndex = -1, setSelectedIndex }: Props) => {
+    // const [selectedIndex, setSelectedIndex] = useState<number>(-1);
     const [searchParams] = useSearchParams();
     const { user } = useAuth()!;
 

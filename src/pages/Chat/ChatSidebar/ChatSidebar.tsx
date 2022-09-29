@@ -10,10 +10,12 @@ import Image from '~/components/Image';
 interface Props {
     className?: string;
     usersChat: User[];
+    selectedIndex: number;
+    setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
     setCurrentChat: React.Dispatch<React.SetStateAction<User | undefined>>;
 }
 const cx = classNames.bind(styles);
-const ChatSidebar = ({ className, usersChat, setCurrentChat }: Props) => {
+const ChatSidebar = ({ className, usersChat, setCurrentChat, setSelectedIndex, selectedIndex }: Props) => {
     const { user } = useAuth()!;
 
     const handleClickItem = (user: User) => {
@@ -25,7 +27,13 @@ const ChatSidebar = ({ className, usersChat, setCurrentChat }: Props) => {
                 [className as string]: className,
             })}
         >
-            <SuggestChat users={usersChat} className={cx('suggest-chat', 'max-h-[70vh]')} onClick={handleClickItem} />
+            <SuggestChat
+                users={usersChat}
+                className={cx('suggest-chat', 'max-h-[70vh]')}
+                onClick={handleClickItem}
+                selectedIndex={selectedIndex}
+                setSelectedIndex={setSelectedIndex}
+            />
             <div className={cx('current-user')}>
                 <Image src={user?.imageUrl} alt="avatar" />
                 <div className={cx('info')}>

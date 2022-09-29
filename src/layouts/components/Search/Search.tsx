@@ -48,7 +48,7 @@ function Search() {
         }
     };
     return (
-        <div>
+        <div className={cx('wrapper')}>
             <HeadlessTippy
                 interactive={true}
                 visible={isShowResult && searchResult.length > 0}
@@ -70,7 +70,7 @@ function Search() {
                     <input
                         ref={inputRef as LegacyRef<HTMLInputElement>}
                         value={searchValue}
-                        placeholder="Search  account and videos"
+                        placeholder="Search  accounts"
                         spellCheck={false}
                         onChange={handleChange}
                         onFocus={() => setIsShowResult(true)}

@@ -5,3 +5,6 @@ export { default as postApi } from './postApi';
 export { default as buildingApi } from './buildingApi';
 export { default as categoryApi } from './categoryApi';
 export { default as messageApi } from './messageApi';
+export { default as productApi } from './productApi';
+export { default as walletApi } from './walletApi';
+export { default as transactionApi } from './transactionsApi';
